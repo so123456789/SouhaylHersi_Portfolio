@@ -27,57 +27,6 @@ body {
 }
 
 /* ══════════════════════
-   CUSTOM CURSOR
-══════════════════════ */
-body.has-custom-cursor,
-body.has-custom-cursor * {
-  cursor: none !important;
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  transition: background 0.2s ease, width 0.2s ease, height 0.2s ease;
-}
-
-.cursor-ring {
-  width: 34px;
-  height: 34px;
-  border: 2px solid var(--green);
-  z-index: 9998;
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-
-.cursor-dot.cursor-hover {
-  background: var(--amber);
-  width: 6px;
-  height: 6px;
-}
-
-.cursor-ring.cursor-hover {
-  width: 54px;
-  height: 54px;
-  border-color: var(--amber);
-  background: rgba(201, 123, 74, 0.12);
-}
-
-@media (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
-
-/* ══════════════════════
    OVERLAY SCREENS
 ══════════════════════ */
 .overlay-screen {
@@ -257,6 +206,10 @@ body.has-custom-cursor * {
   gap: 0.35rem;
   cursor: pointer;
   min-width: 130px;
+  border-radius: 0;
+  color: var(--ink);
+  font: inherit;
+  text-align: center;
   transition: border-color 0.2s, background 0.2s;
 }
 .option-card:hover { border-color: var(--green-light); }
@@ -410,6 +363,13 @@ body.has-custom-cursor * {
 
 .memory-card {
   position: relative;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
   aspect-ratio: 3 / 4;
   cursor: pointer;
   opacity: 0;
@@ -605,4 +565,13 @@ body.has-custom-cursor * {
   .option-card { min-width: 110px; padding: 1rem 1.2rem; }
   .game-topbar { flex-direction: column; align-items: flex-start; }
   .float-shape { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }

@@ -1,4 +1,4 @@
-// design1.js – ClipZ Barbershop
+// ClipZ barbershop booking demo.
 // Full‑screen animated background (more visible) + booking + splash
 
 /* === FULL‑SCREEN CANVAS ANIMATION  ======= */
@@ -7,6 +7,7 @@
   const ctx = canvas.getContext('2d');
   let width, height;
   let objects = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const TYPES = ['scissors', 'line', 'dot', 'diamond'];
 
@@ -36,9 +37,8 @@
   function resizeCanvas() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    // More objects 120 instead of 80
     objects = [];
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 48; i++) {
       objects.push(createObject());
     }
   }
@@ -128,11 +128,12 @@
       if (o.y < -80) o.y = height + 80;
       if (o.y > height + 80) o.y = -80;
     }
-    requestAnimationFrame(draw);
+    if (!reduceMotion) requestAnimationFrame(draw);
   }
 
   window.addEventListener('resize', () => {
     resizeCanvas();
+    draw();
   });
 
   resizeCanvas();
@@ -190,23 +191,30 @@ let selectedService = null;
 let selectedTime = null;
 
 function selectService(el) {
-  document.querySelectorAll('.book-option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.book-option').forEach(o => {
+    o.classList.remove('selected');
+    o.setAttribute('aria-pressed', 'false');
+  });
   el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
   selectedService = el.dataset.service;
   document.getElementById('btn-step-1').disabled = false;
 }
 
 function loadTimes() {
   const dateVal = document.getElementById('booking-date').value;
-  if (!dateVal) return;
+  const grid = document.getElementById('time-slots');
+  selectedTime = null;
+  document.getElementById('btn-step-2').disabled = true;
+  if (!dateVal) {
+    grid.innerHTML = '<p class="slot-placeholder">Select a date to see availability.</p>';
+    return;
+  }
 
   const slots = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM',
                  '11:00 AM', '11:30 AM', '1:00 PM', '1:30 PM',
                  '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
-  const grid = document.getElementById('time-slots');
   grid.innerHTML = '';
-  selectedTime = null;
-  document.getElementById('btn-step-2').disabled = true;
 
   slots.forEach((t, i) => {
     const taken = [1, 4, 7].includes(i);
@@ -249,16 +257,17 @@ function goToStep(n) {
 function confirmBooking() {
   const fn = document.getElementById('fname').value.trim();
   const ln = document.getElementById('lname').value.trim();
-  if (!fn || !ln) {
-    alert('Please enter your first and last name.');
+  const phone = document.getElementById('phone').value.trim();
+  const date = document.getElementById('booking-date').value;
+  if (!fn || !ln || !phone || !selectedService || !date || !selectedTime) {
+    alert('Complete the name and phone fields, and choose a service, date, and time.');
     return;
   }
-  const d = document.getElementById('booking-date').value;
-  const dateStr = new Date(d + 'T00:00').toLocaleDateString('en-CA',
+  const dateStr = new Date(date + 'T00:00').toLocaleDateString('en-CA',
     { weekday: 'long', month: 'long', day: 'numeric' });
 
   document.getElementById('confirm-msg').textContent =
-    `Thanks ${fn}! Your ${selectedService} is confirmed for ${dateStr} at ${selectedTime}. We'll see you at ClipZ.`;
+    `Thanks ${fn}. Your ${selectedService} selection for ${dateStr} at ${selectedTime} is displayed as a demo only. No appointment was sent or reserved.`;
 
   [1, 2, 3].forEach(i => document.getElementById('step-' + i).classList.add('d-none'));
   document.getElementById('booking-confirmed').classList.remove('d-none');
@@ -279,14 +288,23 @@ function resetBooking() {
   document.getElementById('booking-date').value = '';
   document.getElementById('time-slots').innerHTML =
     '<p class="slot-placeholder">Select a date to see availability.</p>';
-  document.querySelectorAll('.book-option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.book-option').forEach(o => {
+    o.classList.remove('selected');
+    o.setAttribute('aria-pressed', 'false');
+  });
   document.getElementById('btn-step-1').disabled = true;
   document.getElementById('btn-step-2').disabled = true;
   goToStep(1);
 }
 
-// Set min date to today
-document.getElementById('booking-date').min = new Date().toISOString().split('T')[0];
+// Set the date minimum using local time to avoid UTC day shifts.
+const localToday = new Date();
+localToday.setMinutes(localToday.getMinutes() - localToday.getTimezoneOffset());
+document.getElementById('booking-date').min = localToday.toISOString().split('T')[0];
+
+document.querySelectorAll('.book-option').forEach(option => {
+  option.addEventListener('click', () => selectService(option));
+});
 
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

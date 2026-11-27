@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 :root {
   --bg:           #111111;
   --bg-2:         #181818;
@@ -458,6 +457,7 @@ body {
 .step-heading { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 1.2rem; }
 
 .book-option {
+  width: 100%;
   padding: 1.1rem 1.3rem;
   background: var(--bg-input-t);
   border: 1px solid var(--border);
@@ -465,6 +465,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
   transition: border-color 0.2s;
 }
 .book-option:hover { border-color: var(--border-lt); }
@@ -546,6 +549,7 @@ body {
 
 .booking-confirmed h4 { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
 .booking-confirmed p  { font-size: 0.9rem; color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.8; }
+.prototype-notice { max-width: 620px; margin: -1.5rem auto 2.5rem; padding: 0.85rem 1rem; border: 1px solid var(--border-lt); color: var(--text-muted); font-size: 0.82rem; text-align: center; }
 
 /* CONTACT */
 .contact-section {
@@ -605,4 +609,8 @@ body {
   .about-img-block { grid-template-columns: 1fr; }
   .about-stat-box:first-child { grid-column: auto; }
   .step-line { max-width: 40px; }
+}
+
+@media (max-width: 575.98px) {
+  .container { overflow-x: clip; }
 }

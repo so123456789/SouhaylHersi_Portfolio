@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="design1.css"/>
+  <link rel="stylesheet" href="clipz-booking-demo.css"/>
 
 </head>
 <body>
@@ -39,14 +39,14 @@
     <a class="navbar-brand site-brand" href="index.html">
       <span class="brand-name">Clip<span class="brand-accent">Z</span></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Hours & Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Project Details</a></li>
         <li class="nav-item ms-lg-3">
           <a class="nav-link nav-book" href="#booking">Book Now</a>
         </li>
@@ -59,12 +59,10 @@
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-7">
-          <p class="eyebrow">Ottawa's Premier Barbershop</p>
+          <p class="eyebrow">Barbershop website concept</p>
           <h1 class="hero-name">GET SHARP.<br><span class="outline-text">STAY SHARP.</span></h1>
           <p class="hero-desc">
-            ClipZ is a barbershop in the heart of Ottawa.
-            Clean fades, classic cuts, and straight razor shaves — 
-            all by appointment or walk-in.
+            A fictional barbershop concept exploring service discovery and a guided appointment flow. Business details, prices, and availability are illustrative; no appointments are submitted.
           </p>
           <div class="d-flex gap-3 flex-wrap">
             <a href="#booking" class="btn btn-primary-custom">Book an Appointment</a>
@@ -74,8 +72,8 @@
         <div class="col-lg-5 d-flex justify-content-center">
           <div class="hero-badge">
             <div class="badge-inner">
-              <span class="badge-top">Est.</span>
-              <span class="badge-year">2020</span>
+              <span class="badge-top">Concept</span>
+              <span class="badge-year">UI</span>
               <span class="badge-bottom">Ottawa, ON</span>
             </div>
           </div>
@@ -139,36 +137,32 @@
         <div class="col-lg-5">
           <div class="about-img-block">
             <div class="about-stat-box">
-              <span class="stat-n">500+</span>
-              <span class="stat-l">Happy Clients</span>
+              <span class="stat-n">01</span>
+              <span class="stat-l">Service discovery</span>
             </div>
             <div class="about-stat-box">
-              <span class="stat-n">5★</span>
-              <span class="stat-l">Google Rating</span>
+              <span class="stat-n">02</span>
+              <span class="stat-l">Booking flow</span>
             </div>
             <div class="about-stat-box">
-              <span class="stat-n">6+</span>
-              <span class="stat-l">Years Open</span>
+              <span class="stat-n">03</span>
+              <span class="stat-l">Responsive layout</span>
             </div>
           </div>
         </div>
         <div class="col-lg-7">
-          <p class="section-eyebrow">Our Story</p>
-          <h2 class="section-title">About ClipZ</h2>
+          <p class="section-eyebrow">Project overview</p>
+          <h2 class="section-title">About this concept</h2>
           <p class="about-text">
-            Founded in 2019, ClipZ started as a two-chair shop on Bank Street 
-            with a simple mission: deliver consistent, high-quality cuts in a 
-            comfortable, no-fuss environment.
+            ClipZ is a fictional local barbershop used to demonstrate a service-focused website. The shop, prices, schedule, and customer details on this page are sample content, not a real business listing.
           </p>
           <p class="about-text">
-            Our barbers bring years of experience and a passion for the craft. 
-            Whether you're coming in for a quick tidy-up or a full grooming session, 
-            you'll leave looking sharp.
+            The interface brings service descriptions, appointment selection, and a booking summary into one straightforward flow. The form is a front-end demonstration and does not contact a business or reserve a time.
           </p>
           <div class="about-tags">
-            <span class="a-tag">Walk-ins Welcome</span>
-            <span class="a-tag">Online Booking</span>
-            <span class="a-tag">All Hair Types</span>
+            <span class="a-tag">Sample services</span>
+            <span class="a-tag">Interactive prototype</span>
+            <span class="a-tag">No booking backend</span>
           </div>
         </div>
       </div>
@@ -182,6 +176,7 @@
         <div class="col-lg-8">
           <p class="section-eyebrow text-center">Get Started</p>
           <h2 class="section-title text-center">Book an Appointment</h2>
+          <p class="prototype-notice" role="note">Demo only: use placeholder details. This form does not submit personal information or reserve an appointment.</p>
 
           <div class="step-indicator mb-5">
             <div class="step active" id="step-dot-1"><span>1</span><small>Service</small></div>
@@ -195,28 +190,28 @@
             <h5 class="step-heading">Select a Service</h5>
             <div class="row g-3 mb-4">
               <div class="col-md-6">
-                <div class="book-option" data-service="Classic Cut - $30" onclick="selectService(this)">
+                <button type="button" class="book-option" data-service="Classic Cut - $30" aria-pressed="false">
                   <strong>Classic Cut</strong>
                   <span>$30  ·  ~30 min</span>
-                </div>
+                </button>
               </div>
               <div class="col-md-6">
-                <div class="book-option" data-service="Fade - $35" onclick="selectService(this)">
+                <button type="button" class="book-option" data-service="Fade - $35" aria-pressed="false">
                   <strong>Fade</strong>
                   <span>$35  ·  ~40 min</span>
-                </div>
+                </button>
               </div>
               <div class="col-md-6">
-                <div class="book-option" data-service="Straight Razor Shave - $28" onclick="selectService(this)">
+                <button type="button" class="book-option" data-service="Straight Razor Shave - $28" aria-pressed="false">
                   <strong>Straight Razor Shave</strong>
                   <span>$28  ·  ~25 min</span>
-                </div>
+                </button>
               </div>
               <div class="col-md-6">
-                <div class="book-option" data-service="Cut + Beard - $50" onclick="selectService(this)">
+                <button type="button" class="book-option" data-service="Cut + Beard - $50" aria-pressed="false">
                   <strong>Cut + Beard</strong>
                   <span>$50  ·  ~55 min</span>
-                </div>
+                </button>
               </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -230,8 +225,8 @@
             <h5 class="step-heading">Choose a Date & Time</h5>
             <div class="row g-3 mb-4">
               <div class="col-md-6">
-                <label class="form-label-custom">Date</label>
-                <input type="date" id="booking-date" class="form-input-custom" onchange="loadTimes()"/>
+                <label class="form-label-custom" for="booking-date">Date</label>
+                <input type="date" id="booking-date" class="form-input-custom" onchange="loadTimes()" required />
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Available Times</label>
@@ -252,16 +247,16 @@
             <h5 class="step-heading">Your Name</h5>
             <div class="row g-3 mb-4">
               <div class="col-md-6">
-                <label class="form-label-custom">First Name</label>
-                <input type="text" id="fname" class="form-input-custom" placeholder="Marcus"/>
+                <label class="form-label-custom" for="fname">First Name</label>
+                <input type="text" id="fname" class="form-input-custom" placeholder="Alex" autocomplete="given-name" required />
               </div>
               <div class="col-md-6">
-                <label class="form-label-custom">Last Name</label>
-                <input type="text" id="lname" class="form-input-custom" placeholder="Johnson"/>
+                <label class="form-label-custom" for="lname">Last Name</label>
+                <input type="text" id="lname" class="form-input-custom" placeholder="Taylor" autocomplete="family-name" required />
               </div>
               <div class="col-12">
-                <label class="form-label-custom">Phone Number</label>
-                <input type="tel" id="phone" class="form-input-custom" placeholder="613-555-0000"/>
+                <label class="form-label-custom" for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-input-custom" placeholder="555-0100" autocomplete="tel" required />
               </div>
             </div>
             <div class="booking-summary mb-4">
@@ -278,7 +273,7 @@
 
           <div id="booking-confirmed" class="booking-confirmed d-none">
             <div class="confirm-icon">✓</div>
-            <h4>You're all set!</h4>
+            <h4>Demo flow complete</h4>
             <p id="confirm-msg"></p>
             <button class="btn btn-secondary-custom mt-3" onclick="resetBooking()">Book Another</button>
           </div>
@@ -294,28 +289,19 @@
       <div class="row g-5">
         <div class="col-md-4">
           <p class="section-eyebrow">Find Us</p>
-          <h3 class="contact-heading">Hours &<br>Location</h3>
-          <div class="hours-list">
-            <div class="hours-row"><span>Mon – Fri</span><span>9am – 7pm</span></div>
-            <div class="hours-row"><span>Saturday</span><span>9am – 5pm</span></div>
-            <div class="hours-row closed"><span>Sunday</span><span>Closed</span></div>
-          </div>
+          <h3 class="contact-heading">Schedule<br>Concept</h3>
+          <p class="contact-detail">Sample business hours are shown in the booking prototype to make the schedule interface testable.</p>
         </div>
         <div class="col-md-4">
-          <p class="section-eyebrow">Address</p>
-          <h3 class="contact-heading">Visit Us</h3>
-          <p class="contact-detail">123 Bank Street<br>Ottawa, ON K1P 5N2</p>
-          <p class="contact-detail">
-            <a href="tel:6135550123" class="contact-link">(613) 555-0123</a><br>
-            <a href="mailto:hello@clipz.ca" class="contact-link">hello@clipz.ca</a>
-          </p>
+          <p class="section-eyebrow">Prototype details</p>
+          <h3 class="contact-heading">Illustrative content</h3>
+          <p class="contact-detail">The business name, service menu, sample prices, address, and schedule are fictional interface content.</p>
         </div>
         <div class="col-md-4">
-          <p class="section-eyebrow">Walk-ins</p>
-          <h3 class="contact-heading">No Appointment?</h3>
+          <p class="section-eyebrow">Interaction</p>
+          <h3 class="contact-heading">Try the flow</h3>
           <p class="contact-detail">
-            Walk-ins are always welcome, subject to barber availability.
-            We recommend booking online to guarantee your preferred time.
+            Choose a service, date, and sample time, then complete the local confirmation screen. Nothing is sent or reserved.
           </p>
           <a href="#booking" class="btn btn-primary-custom mt-2">Book Online</a>
         </div>
@@ -328,7 +314,7 @@
     <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
       <div>
         <p class="footer-brand">Clip<span class="brand-accent">Z</span></p>
-        <p class="footer-sub">123 Bank Street · Ottawa, ON</p>
+        <p class="footer-sub">Barbershop website concept · Sample content</p>
       </div>
       <p class="footer-designed">Designed by <a href="index.html" class="footer-link">Souhayl Hersi</a></p>
     </div>
@@ -338,6 +324,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- External JavaScript -->
-  <script src="design1.js"></script>
+  <script src="clipz-booking-demo.js"></script>
 </body>
 </html>

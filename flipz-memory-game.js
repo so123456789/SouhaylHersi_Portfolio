@@ -1,4 +1,4 @@
-// design2.js – FlipZ Memory Game
+// FlipZ memory game.
 // Icons are Unicode emoji (no images will take too long).
 // Sound effects loaded from local /audio files.
 
@@ -68,8 +68,12 @@ function initSetupListeners() {
   document.querySelectorAll('#levelOptions .option-card').forEach(card => {
     card.addEventListener('click', () => {
       audioController.select();
-      document.querySelectorAll('#levelOptions .option-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('#levelOptions .option-card').forEach(c => {
+        c.classList.remove('selected');
+        c.setAttribute('aria-pressed', 'false');
+      });
       card.classList.add('selected');
+      card.setAttribute('aria-pressed', 'true');
       state.level = card.dataset.level;
       checkReady();
     });
@@ -78,8 +82,12 @@ function initSetupListeners() {
   document.querySelectorAll('#themeOptions .option-card').forEach(card => {
     card.addEventListener('click', () => {
       audioController.select();
-      document.querySelectorAll('#themeOptions .option-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('#themeOptions .option-card').forEach(c => {
+        c.classList.remove('selected');
+        c.setAttribute('aria-pressed', 'false');
+      });
       card.classList.add('selected');
+      card.setAttribute('aria-pressed', 'true');
       state.theme = card.dataset.theme;
       checkReady();
     });
@@ -112,11 +120,14 @@ function renderGrid() {
   grid.className = 'card-grid' + (state.level === 'advanced' ? ' advanced' : '');
 
   state.cards.forEach((cardData, index) => {
-    const cardEl = document.createElement('div');
+    const cardEl = document.createElement('button');
+    cardEl.type = 'button';
     cardEl.className = 'memory-card';
     cardEl.style.animationDelay = (index * 0.04) + 's';
     cardEl.dataset.id = cardData.id;
     cardEl.dataset.icon = cardData.icon;
+    cardEl.dataset.position = index + 1;
+    cardEl.setAttribute('aria-label', `Card ${index + 1}, face down`);
     cardEl.innerHTML =
       '<div class="card-inner">' +
         '<div class="card-face card-back-face">Z</div>' +
@@ -164,6 +175,7 @@ function flipCard(cardEl) {
   if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
 
   cardEl.classList.add('flipped');
+  cardEl.setAttribute('aria-label', `Card ${cardEl.dataset.position}, ${cardEl.dataset.icon}`);
   audioController.flip();
   state.flippedCards.push(cardEl);
 
@@ -183,6 +195,10 @@ function checkMatch() {
     setTimeout(() => {
       first.classList.add('matched');
       second.classList.add('matched');
+      [first, second].forEach(card => {
+        card.setAttribute('aria-label', `Matched card: ${card.dataset.icon}`);
+        card.disabled = true;
+      });
       state.matchedCount++;
       document.getElementById('pairsDisplay').textContent =
         state.matchedCount + '/' + state.totalPairs;
@@ -202,6 +218,9 @@ function checkMatch() {
     setTimeout(() => {
       first.classList.remove('flipped', 'mismatch');
       second.classList.remove('flipped', 'mismatch');
+      [first, second].forEach(card => {
+        card.setAttribute('aria-label', `Card ${card.dataset.position}, face down`);
+      });
       state.flippedCards = [];
       state.busy = false;
     }, 800);
@@ -245,7 +264,10 @@ function endGame(won) {
 /* ========== RESET TO SETUP ========== */
 function resetToSetup() {
   clearInterval(state.timerInterval);
-  document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.option-card').forEach(c => {
+    c.classList.remove('selected');
+    c.setAttribute('aria-pressed', 'false');
+  });
   state.level = null;
   state.theme = null;
   document.getElementById('playBtn').disabled = true;
@@ -270,61 +292,10 @@ function initBackConfirm() {
   });
 }
 
-/* ========== CUSTOM CURSOR ========== */
-function initCustomCursor() {
-  if (!window.matchMedia('(pointer: fine)').matches) return; // skip on touch devices
-
-  document.body.classList.add('has-custom-cursor');
-
-  const dot  = document.createElement('div');
-  dot.className = 'cursor-dot';
-  const ring = document.createElement('div');
-  ring.className = 'cursor-ring';
-  document.body.appendChild(dot);
-  document.body.appendChild(ring);
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let ringX  = mouseX;
-  let ringY  = mouseY;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.left = mouseX + 'px';
-    dot.style.top  = mouseY + 'px';
-  });
-
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    ring.style.left = ringX + 'px';
-    ring.style.top  = ringY + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  const hoverSelector = '.memory-card, .option-card, .btn-primary-custom, .btn-outline-custom, .game-back';
-
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(hoverSelector)) {
-      dot.classList.add('cursor-hover');
-      ring.classList.add('cursor-hover');
-    }
-  });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(hoverSelector)) {
-      dot.classList.remove('cursor-hover');
-      ring.classList.remove('cursor-hover');
-    }
-  });
-}
-
 /* ========== INIT ========== */
 document.addEventListener('DOMContentLoaded', () => {
   initSetupListeners();
   initBackConfirm();
-  initCustomCursor();
 
   document.getElementById('startBtn').addEventListener('click', () => showScreen('setupScreen'));
   document.getElementById('playBtn').addEventListener('click', startGame);
